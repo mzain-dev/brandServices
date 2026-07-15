@@ -64,6 +64,75 @@ const GlobalGradients: React.FC = () => {
 
 // ---- Technical Drafting Blueprint Background -----------------------
 
+const BackgroundGear: React.FC<{
+	x: string | number;
+	y: string | number;
+	size: number;
+	speed: number;
+}> = ({x, y, size, speed}) => {
+	const frame = useCurrentFrame();
+	const rotation = frame * speed;
+
+	return (
+		<svg
+			width={size}
+			height={size}
+			viewBox="0 0 100 100"
+			style={{
+				position: 'absolute',
+				left: x,
+				top: y,
+				transform: `translate(-50%, -50%) rotate(${rotation}deg)`,
+				opacity: 0.2,
+				pointerEvents: 'none',
+			}}
+		>
+			{/* Outer ring */}
+			<circle cx="50" cy="50" r="42" fill="none" stroke="#64748b" strokeWidth="1" />
+			{/* Middle ring */}
+			<circle cx="50" cy="50" r="30" fill="none" stroke="#64748b" strokeWidth="0.75" strokeDasharray="3 3" />
+			{/* Inner hub */}
+			<circle cx="50" cy="50" r="12" fill="none" stroke="#64748b" strokeWidth="1" />
+			<circle cx="50" cy="50" r="4" fill="none" stroke="#64748b" strokeWidth="1" />
+
+			{/* Spokes */}
+			{[0, 45, 90, 135, 180, 225, 270, 315].map((angle) => (
+				<line
+					key={angle}
+					x1={50 + 12 * Math.cos((angle * Math.PI) / 180)}
+					y1={50 + 12 * Math.sin((angle * Math.PI) / 180)}
+					x2={50 + 42 * Math.cos((angle * Math.PI) / 180)}
+					y2={50 + 42 * Math.sin((angle * Math.PI) / 180)}
+					stroke="#64748b"
+					strokeWidth="0.75"
+				/>
+			))}
+
+			{/* Gear teeth */}
+			{[...Array(24)].map((_, i) => {
+				const angle = (i * 360) / 24;
+				const rad = (angle * Math.PI) / 180;
+				const x1 = 50 + 42 * Math.cos(rad);
+				const y1 = 50 + 42 * Math.sin(rad);
+				const x2 = 50 + 45 * Math.cos(rad);
+				const y2 = 50 + 45 * Math.sin(rad);
+				return (
+					<line
+						key={i}
+						x1={x1}
+						y1={y1}
+						x2={x2}
+						y2={y2}
+						stroke="#64748b"
+						strokeWidth="2"
+						strokeLinecap="round"
+					/>
+				);
+			})}
+		</svg>
+	);
+};
+
 const BlueprintBackground: React.FC = () => {
 	return (
 		<div
@@ -72,8 +141,12 @@ const BlueprintBackground: React.FC = () => {
 				inset: 0,
 				backgroundColor: '#f5f7fa',
 				backgroundImage: 'radial-gradient(circle at 50% 55%, #ffffff 0%, #e8ecf2 100%)',
+				overflow: 'hidden',
 			}}
 		>
+			{/* Decorative Technical Background Gears */}
+			<BackgroundGear x="100%" y="0%" size={240} speed={0.8} />
+			<BackgroundGear x="0%" y="100%" size={320} speed={-0.6} />
 			{/* Technical Draft Grid Overlay */}
 			<div
 				style={{

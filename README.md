@@ -73,3 +73,9 @@ You can render the compositions to MP4 files:
 *   `src/ChargingWheelVideo.tsx`: Component source code for the circular charging wheel animation.
 *   `out/`: Directory containing pre-rendered assets.
 *   `hmi-logo.png`: HMI brand logo asset used in the videos.
+
+---
+
+## 👤 Author
+
+* **Muhammad Zain** - [mzain-dev](https://github.com/mzain-dev)

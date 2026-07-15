@@ -2,6 +2,7 @@
   "name": "hmi-workflow-video",
   "version": "1.0.0",
   "private": true,
+  "author": "Muhammad Zain",
   "scripts": {
     "start": "remotion studio src/index.ts",
     "render": "remotion render src/index.ts WorkflowVideo out/workflow.mp4",
